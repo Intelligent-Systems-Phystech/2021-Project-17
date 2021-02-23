@@ -1,0 +1,44 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage{hyperref}
+\usepackage[T2A]{fontenc}	
+\usepackage{amssymb}
+\usepackage[english, russian]{babel}
+\title{BCI: Выбор согласованных моделей для построения нейроинтерфейса}
+\author{Кулаков Ярослав}
+\date{February 2021}
+
+\begin{document}
+
+\maketitle
+
+\section{Abstract}
+Разрабатываается Brain-Computer Interface. В настоящее время все больше задач перекладывается на плечи машин, машинного обучения. В то же время наш собственный мозг остается неизученным и трудно прогнозируемым объектом. В данной работе рассматривается задача моделирования сигнала, снимаемого с конечностей при некой активности мозга, а также моделирования исходного сигнала головного мозга по движению частей тела. Сначала предлагается применить методы снижения размерности исходного пространстав, так как точки сильно скоррелированы.
+
+Новизна: Анализ прогноза и латентного пространства, получаемых парой гетерогенных моделей.
+
+Эксперементальные результаты подтверждают, что предлагаемый метод улучшает качество предсказаний модели.
+
+\section{Introduction}
+В работе предлагается исследовать и сравнить разные модели машинного обучения - начиная от линейных и заканчивая сложными нейросетями. Оценивается качетсво, скорость, устойчивость и сложность пар разных моделей. Но прежде чем их применить решается задача снижения размерности исходного пространства. В статье (Катруца, Стрижов, 2017) даны обширные сравнения QPFS с LARS, Lasso, Stepwise, Ridge и отбор признаков с генетическим алгоритом. Quadratic Programming Feature Selection (QPFS) превосходит конкурентов и этот метод можно адаптировать для нашей задачи. Так же проводится сравнение с методом PLS.  При решении задачи отображения в латентное пространство приходится одновременно оптимизировать две задачи - минимизировать корреляцию между признаками и максимизировать информативность 
+признаков по отношению к таргету. Задача осложняется тем, что признаки и таргеты имеют разную природу. 
+В результате получен устойчивый пайплан модулирования сигнала в конечности от карты активности мозга, состоящий из этапов:
+\begin{itemize}
+    \item Построение латентного пространства меньшей размерности, с минимальной корреляцией признаков и сохранившего максимум информации о таргет-сигнале.
+    \item Применение уже в полученном пространстве лучшей модели.
+     \item Восстановление обратной зависимости для предсказания активности мозга.
+\end{itemize}
+
+\section{Literature}
+\renewcommand\labelitemi{$\textasteriskcentered$}
+\begin{itemize}
+\item  Яушев Ф.Ю., Исаченко Р.В., Стрижов В.В. Модели согласования скрытого пространства в задаче прогнозирования  Системы и средства информатики, 2021, 31(1). \href{http://strijov.com/papers/Isachenko2020CanonicCorrelation.pdf}{PDF}.
+\item  Исаченко Р.В. Выбор модели декодирования сигналов в пространствах высокой размерности. Рукопись, 2021.\href{https://github.com/r-isachenko/PhDThesis/raw/master/doc/Isachenko2021PhDThesis.pdf}{PDF} 
+\item  Исаченко Р.В. Выбор модели декодирования сигналов в пространствах высокой размерности. \href{https://github.com/r-isachenko/PhDThesis/raw/master/pres/Isachenko2020PhDThesisPres.pdf}{Слайды}.
+\item  Isachenko R.V., Vladimirova M.R., Strijov V.V. Dimensionality reduction for time series decoding and forecasting problems // DEStech Transactions on Computer Science and Engineering, 2018, 27349 : 286-296. \href{http://strijov.com/papers/IsachenkoVladimirova2018PLS.pdf}{PDF}. 
+\item  Isachenko R.V., Strijov V.V. Quadratic Programming Optimization with Feature Selection for Non-linear Models // Lobachevskii Journal of Mathematics, 2018, 39(9) : 1179-1187. \href{https://rdcu.be/bfR32}{PDF}. 
+\item  Motrenko A.P., Strijov V.V. Multi-way feature selection for ECoG-based brain-computer interface // Expert Systems with Applications, 2018, 114(30) : 402-413. \href{http://strijov.com/papers/MotrenkoStrijov2017ECoG_HL_2.pdf}{PDF}. 
+\item  Eliseyev A., Aksenova T. Stable and artifact-resistant decoding of 3D hand trajectories from ECoG signals using the generalized additive model. Journal of neural engineering. – 2014.
+\end{itemize}
+
+\end{document}
